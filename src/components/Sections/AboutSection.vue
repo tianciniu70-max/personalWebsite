@@ -10,7 +10,7 @@
 
       <div class="about-highlights">
         <div
-          v-for="(highlight, index) in t('about.highlights')"
+          v-for="(highlight, index) in highlights"
           :key="index"
           class="highlight-card"
           :class="{ 'highlight-card--delay': index }"
@@ -33,6 +33,8 @@ import SectionContainer from '@/components/Layout/SectionContainer.vue'
 import { MagicStick, Briefcase, TrendCharts, Location } from '@element-plus/icons-vue'
 
 const { t } = useI18n()
+
+const highlights = computed(() => t('about.highlights') as unknown as any[])
 
 const formattedStory = computed(() => {
   const story = t('about.story')

@@ -5,7 +5,7 @@
 
     <div class="skills">
       <div
-        v-for="(category, index) in t('skills.categories')"
+        v-for="(category, index) in categories"
         :key="category.name"
         class="skill-category"
         :class="{ 'skill-category--delay': index }"
@@ -28,11 +28,14 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SectionContainer from '@/components/Layout/SectionContainer.vue'
 import { Management, Tools, DataAnalysis, Link } from '@element-plus/icons-vue'
 
 const { t } = useI18n()
+
+const categories = computed(() => t('skills.categories') as unknown as any[])
 
 const iconMap: Record<string, any> = {
   code: Management,

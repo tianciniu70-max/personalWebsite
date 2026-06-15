@@ -5,7 +5,7 @@
 
     <div class="projects">
       <div
-        v-for="(project, index) in t('projects.items')"
+        v-for="(project, index) in projects"
         :key="project.id"
         class="project-card"
         :class="{ 'project-card--delay': index }"
@@ -65,6 +65,7 @@ import { Cpu, List, Trophy } from '@element-plus/icons-vue'
 const { t, locale } = useI18n()
 
 const currentLocale = computed(() => locale.value)
+const projects = computed(() => t('projects.items') as unknown as any[])
 </script>
 
 <style lang="scss" scoped>

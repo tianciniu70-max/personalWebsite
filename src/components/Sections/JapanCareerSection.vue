@@ -14,7 +14,7 @@
 
       <div class="why-japan">
         <div
-          v-for="(item, index) in t('japanCareer.whyJapan')"
+          v-for="(item, index) in whyJapan"
           :key="item.title"
           class="why-card"
           :class="{ 'why-card--delay': index }"
@@ -49,7 +49,7 @@
           {{ t('japanCareer.valueProposition') }}
         </h3>
         <ul class="value-list">
-          <li v-for="value in t('japanCareer.values')" :key="value" class="value-item">
+          <li v-for="value in values" :key="value" class="value-item">
             <span class="value-bullet">✓</span>
             {{ value }}
           </li>
@@ -68,6 +68,8 @@ import { InfoFilled, ChatDotRound, Star, Medal, TrophyBase, TrendCharts } from '
 const { t, locale } = useI18n()
 
 const currentLocale = computed(() => locale.value)
+const whyJapan = computed(() => t('japanCareer.whyJapan') as unknown as any[])
+const values = computed(() => t('japanCareer.values') as unknown as string[])
 
 const whyIcons = [Medal, TrophyBase, TrendCharts]
 

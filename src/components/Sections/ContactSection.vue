@@ -6,7 +6,7 @@
     <div class="contact">
       <div class="contact-channels">
         <a
-          v-for="channel in t('contact.channels')"
+          v-for="channel in channels"
           :key="channel.type"
           :href="channel.url"
           :title="channel.type"
@@ -44,6 +44,7 @@ import { Message, Link as LinkIcon, Promotion, ChatDotRound } from '@element-plu
 const { t, locale } = useI18n()
 
 const currentLocale = computed(() => locale.value)
+const channels = computed(() => t('contact.channels') as unknown as any[])
 
 const iconMap: Record<string, any> = {
   email: Message,

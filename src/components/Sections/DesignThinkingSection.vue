@@ -8,7 +8,7 @@
 
       <div class="pillars">
         <div
-          v-for="(pillar, index) in t('designThinking.pillars')"
+          v-for="(pillar, index) in pillars"
           :key="pillar.title"
           class="pillar"
           :class="{ 'pillar--delay': index }"
@@ -34,11 +34,14 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SectionContainer from '@/components/Layout/SectionContainer.vue'
 import { User, View, Pointer } from '@element-plus/icons-vue'
 
 const { t } = useI18n()
+
+const pillars = computed(() => t('designThinking.pillars') as unknown as any[])
 
 const pillarIcons = [User, View, Pointer]
 
