@@ -98,7 +98,6 @@ const { t } = useI18n()
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/variables.scss';
 
 .hero {
   display: grid;

@@ -69,7 +69,6 @@ const socialChannels = computed(() => [
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/variables.scss';
 
 .app-footer {
   background: var(--color-black);
