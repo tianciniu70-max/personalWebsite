@@ -1,215 +1,241 @@
 <template>
-  <SectionContainer id="projects" variant="alt">
-    <h2 class="section-title">{{ t('projects.title') }}</h2>
-    <p class="section-subtitle">{{ t('projects.subtitle') }}</p>
+  <section class="projects" id="projects">
+    <!-- 区域标题 -->
+    <div class="section-header">
+      <span class="section-label animate-on-enter">{{ t('projects.subtitle') }}</span>
+      <h2 class="section-title animate-on-enter">{{ t('projects.title') }}</h2>
+    </div>
 
-    <div class="projects">
+    <!-- 项目卡片网格 -->
+    <div class="projects-grid">
       <div
         v-for="(project, index) in projects"
         :key="project.id"
-        class="project-card"
-        :class="{ 'project-card--delay': index }"
+        class="project-card animate-on-enter"
       >
-        <div class="project-header">
-          <h3 class="project-name">{{ project.name }}</h3>
-          <div class="project-meta">
-            <span class="project-role">{{ project.role }}</span>
-            <span class="project-duration">{{ project.duration }}</span>
+        <!-- 编号 -->
+        <span class="card-number">{{ String(index + 1).padStart(2, '0') }}</span>
+
+        <!-- 项目信息 -->
+        <div class="card-body">
+          <h3 class="card-title">{{ project.name }}</h3>
+          <div class="card-meta">
+            <span class="meta-role">{{ project.role }}</span>
+            <span class="meta-duration">{{ project.duration }}</span>
           </div>
-        </div>
+          <p class="card-desc">{{ project.description }}</p>
 
-        <p class="project-description">{{ project.description }}</p>
-
-        <div class="project-section">
-          <h4 class="section-label">
-            <el-icon><Cpu /></el-icon>
-            {{ currentLocale === 'zh' ? '技术栈' : 'Tech Stack' }}
-          </h4>
-          <div class="tech-tags">
-            <span v-for="tech in project.tech_stack" :key="tech" class="tech-tag">
+          <!-- 技术标签 -->
+          <div class="card-tags">
+            <span
+              v-for="tech in (project.tech_stack || project.tags)"
+              :key="tech"
+              class="card-tag"
+            >
               {{ tech }}
             </span>
           </div>
-        </div>
 
-        <div class="project-section">
-          <h4 class="section-label">
-            <el-icon><List /></el-icon>
-            {{ currentLocale === 'zh' ? '主要职责' : 'Responsibilities' }}
-          </h4>
-          <ul class="project-list">
-            <li v-for="item in project.responsibilities" :key="item">{{ item }}</li>
-          </ul>
-        </div>
-
-        <div class="project-section">
-          <h4 class="section-label">
-            <el-icon><Trophy /></el-icon>
-            {{ currentLocale === 'zh' ? '项目成果' : 'Achievements' }}
-          </h4>
-          <ul class="project-list project-list--achievements">
+          <!-- 成果 -->
+          <ul v-if="project.achievements" class="card-achievements">
             <li v-for="item in project.achievements" :key="item">{{ item }}</li>
           </ul>
         </div>
       </div>
     </div>
-  </SectionContainer>
+  </section>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import SectionContainer from '@/components/Layout/SectionContainer.vue'
-import { Cpu, List, Trophy } from '@element-plus/icons-vue'
 
-const { t, locale, tm } = useI18n()
+const { t, tm } = useI18n()
 
-const currentLocale = computed(() => locale.value)
 const projects = computed(() => tm('projects.items') as any[])
 </script>
 
 <style lang="scss" scoped>
+@use '@/styles/variables.scss' as *;
+
 .projects {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-8);
-  margin-top: var(--spacing-12);
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: $spacing-32 $spacing-8;
 }
 
-.project-card {
-  background: var(--color-background);
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-8);
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-base) var(--ease-out);
-
-  &:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-4px);
-  }
-
-  &--delay {
-    animation: fadeIn 0.6s var(--ease-out) backwards;
-
-    @for $i from 1 through 3 {
-      &:nth-child(#{$i}) &--delay {
-        animation-delay: #{$i * 0.15}s;
-      }
-    }
-  }
-}
-
-.project-header {
-  margin-bottom: var(--spacing-6);
-  padding-bottom: var(--spacing-6);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.project-name {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-black);
-  margin-bottom: var(--spacing-3);
-
-  @media (max-width: $breakpoint-md) {
-    font-size: var(--font-size-xl);
-  }
-}
-
-.project-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-4);
-}
-
-.project-role {
-  padding: var(--spacing-1) var(--spacing-3);
-  background: var(--color-primary);
-  color: var(--color-background);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  border-radius: var(--border-radius-sm);
-}
-
-.project-duration {
-  display: flex;
-  align-items: center;
-  font-size: var(--font-size-sm);
-  color: var(--color-gray);
-
-  &::before {
-    content: '•';
-    margin-right: var(--spacing-2);
-  }
-}
-
-.project-description {
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-relaxed);
-  color: var(--color-dark-gray);
-  margin-bottom: var(--spacing-6);
-}
-
-.project-section {
-  margin-bottom: var(--spacing-6);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
+// 区域标题
+.section-header {
+  text-align: center;
+  margin-bottom: $spacing-16;
 }
 
 .section-label {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-black);
-  margin-bottom: var(--spacing-4);
+  display: inline-block;
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: var(--color-accent);
+  letter-spacing: $letter-spacing-wider;
+  text-transform: uppercase;
+  margin-bottom: $spacing-3;
 }
 
-.tech-tags {
+.section-title {
+  font-family: $font-family-display;
+  font-size: $font-size-5xl;
+  font-weight: $font-weight-bold;
+  color: var(--color-primary-dark);
+  letter-spacing: $letter-spacing-tighter;
+  line-height: $line-height-tight;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+// 项目卡片
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-6;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.project-card {
+  position: relative;
+  padding: $spacing-8;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  transition: border-color $transition-fast $ease-default;
+
+  &:hover {
+    border-color: var(--color-accent);
+
+    .card-number {
+      color: var(--color-accent);
+    }
+  }
+}
+
+.card-number {
+  display: block;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: var(--color-gray);
+  margin-bottom: $spacing-5;
+}
+
+.card-body {
+  // main content
+}
+
+.card-title {
+  font-family: $font-family-display;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: var(--color-primary-dark);
+  margin-bottom: $spacing-2;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-lg;
+  }
+}
+
+.card-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-2);
+  gap: $spacing-3;
+  margin-bottom: $spacing-4;
 }
 
-.tech-tag {
-  padding: var(--spacing-2) var(--spacing-4);
-  background: var(--color-background-alt);
+.meta-role {
+  display: inline-block;
+  padding: $spacing-1 $spacing-3;
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: #FFFFFF;
+  background: var(--color-accent);
+}
+
+.meta-duration {
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: var(--color-gray);
+}
+
+.card-desc {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
   color: var(--color-dark-gray);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  border-radius: var(--border-radius-sm);
-  border: 1px solid var(--color-border);
+  line-height: $line-height-relaxed;
+  margin-bottom: $spacing-4;
 }
 
-.project-list {
+.card-tags {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-3);
-  padding-left: var(--spacing-6);
+  flex-wrap: wrap;
+  gap: $spacing-2;
+  margin-bottom: $spacing-4;
+}
+
+.card-tag {
+  display: inline-block;
+  padding: $spacing-1 $spacing-3;
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: var(--color-dark-gray);
+  background: var(--color-muted);
+}
+
+.card-achievements {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 
   li {
     position: relative;
-    font-size: var(--font-size-sm);
-    line-height: var(--line-height-relaxed);
-    color: var(--color-dark-gray);
+    padding-left: $spacing-4;
+    font-family: $font-family-base;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-normal;
+    color: var(--color-gray);
+    line-height: $line-height-relaxed;
 
     &::before {
-      content: '▸';
+      content: '→';
       position: absolute;
-      left: -20px;
-      color: var(--color-primary);
-      font-weight: var(--font-weight-semibold);
+      left: 0;
+      color: var(--color-accent);
+    }
+
+    + li {
+      margin-top: $spacing-1;
     }
   }
+}
 
-  &--achievements {
-    li::before {
-      content: '✓';
-      color: var(--color-success);
-    }
+// 滚动动画
+.animate-on-enter {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: all 0.5s $ease-default;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>

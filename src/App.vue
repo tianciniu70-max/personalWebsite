@@ -4,16 +4,14 @@
     <main class="app-main">
       <router-view />
     </main>
-    <AppFooter />
   </div>
 </template>
 
 <script setup lang="ts">
 import AppHeader from '@/components/Layout/AppHeader.vue'
-import AppFooter from '@/components/Layout/AppFooter.vue'
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .app {
   display: flex;
   flex-direction: column;

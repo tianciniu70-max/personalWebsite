@@ -1,133 +1,238 @@
 <template>
-  <SectionContainer id="about" variant="alt">
-    <h2 class="section-title">{{ t('about.title') }}</h2>
-    <p class="section-subtitle">{{ t('about.subtitle') }}</p>
+  <section class="about" id="about">
+    <!-- 区域标题 -->
+    <div class="section-header">
+      <span class="section-label animate-on-enter">{{ t('about.subtitle') }}</span>
+      <h2 class="section-title animate-on-enter">{{ t('about.title') }}</h2>
+    </div>
 
-    <div class="about">
-      <div class="about-story">
-        <p class="story-text" v-html="formattedStory"></p>
+    <!-- 内容区域 -->
+    <div class="about-content animate-on-enter">
+      <!-- 左侧文字 -->
+      <div class="about-text">
+        <p>{{ t('about.story') }}</p>
+        <p class="about-extra">
+          Currently exploring opportunities in Japan's tech scene, where I can contribute my expertise in frontend architecture while immersing myself in a culture that values craftsmanship and attention to detail.
+        </p>
       </div>
 
-      <div class="about-highlights">
+      <!-- 右侧数据统计 -->
+      <div class="about-stats">
         <div
-          v-for="(highlight, index) in highlights"
+          v-for="(stat, index) in stats"
           :key="index"
-          class="highlight-card"
-          :class="{ 'highlight-card--delay': index }"
+          class="stat-card"
         >
-          <div class="highlight-icon">
-            <el-icon :size="24"><component :is="getHighlightIcon(index)" /></el-icon>
-          </div>
-          <h4 class="highlight-label">{{ highlight.label }}</h4>
-          <p class="highlight-desc">{{ highlight.desc }}</p>
+          <span class="stat-number">{{ stat.number }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
         </div>
       </div>
     </div>
-  </SectionContainer>
+
+    <!-- 亮点卡片 -->
+    <div class="highlights-grid">
+      <div
+        v-for="(item, index) in highlights"
+        :key="index"
+        class="highlight-card animate-on-enter"
+      >
+        <div class="highlight-icon">{{ getHighlightIcon(index) }}</div>
+        <div class="highlight-info">
+          <h4>{{ item.title || item.label }}</h4>
+          <p>{{ item.desc }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import SectionContainer from '@/components/Layout/SectionContainer.vue'
-import { MagicStick, Briefcase, TrendCharts, Location } from '@element-plus/icons-vue'
 
 const { t, tm } = useI18n()
 
 const highlights = computed(() => tm('about.highlights') as any[])
-
-const formattedStory = computed(() => {
-  const story = t('about.story')
-  const lines = story.split('\n').filter(line => line.trim())
-  return lines.map(line => {
-    if (line.trim().startsWith('-')) {
-      return `&nbsp;&nbsp;&nbsp;&nbsp;${line.replace('-', '•')}`
-    }
-    return line
-  }).join('<br>')
-})
-
-const highlightIcons = [MagicStick, Briefcase, TrendCharts, Location]
+const stats = computed(() => tm('about.stats') as any[])
 
 const getHighlightIcon = (index: number) => {
-  return highlightIcons[index % highlightIcons.length]
+  const icons = ['⚡', '💡', '🎯', '📊']
+  return icons[index % icons.length]
 }
 </script>
 
 <style lang="scss" scoped>
-.about {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-12);
-  margin-top: var(--spacing-12);
+@use '@/styles/variables.scss' as *;
 
-  @media (max-width: $breakpoint-lg) {
-    grid-template-columns: 1fr;
+.about {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: $spacing-32 $spacing-8;
+  background: var(--color-background-alt);
+}
+
+// 区域标题
+.section-header {
+  text-align: center;
+  margin-bottom: $spacing-16;
+}
+
+.section-label {
+  display: inline-block;
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: var(--color-accent);
+  letter-spacing: $letter-spacing-wider;
+  text-transform: uppercase;
+  margin-bottom: $spacing-3;
+}
+
+.section-title {
+  font-family: $font-family-display;
+  font-size: $font-size-5xl;
+  font-weight: $font-weight-bold;
+  color: var(--color-primary-dark);
+  letter-spacing: $letter-spacing-tighter;
+  line-height: $line-height-tight;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-3xl;
   }
 }
 
-.about-story {
-  .story-text {
-    font-size: var(--font-size-lg);
-    line-height: var(--line-height-relaxed);
+// 内容区域
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: $spacing-16;
+  margin-bottom: $spacing-16;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+    gap: $spacing-10;
+  }
+}
+
+.about-text {
+  p {
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    font-weight: $font-weight-normal;
     color: var(--color-dark-gray);
-    text-align: justify;
+    line-height: $line-height-relaxed;
 
     @media (max-width: $breakpoint-md) {
-      font-size: var(--font-size-base);
+      font-size: $font-size-sm;
     }
   }
 }
 
-.about-highlights {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-6);
+.about-extra {
+  margin-top: $spacing-4;
+}
+
+// 数据统计
+.about-stats {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+
+  @media (max-width: $breakpoint-lg) {
+    flex-direction: row;
+    gap: $spacing-4;
+  }
+}
+
+.stat-card {
+  padding: $spacing-6;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+}
+
+.stat-number {
+  display: block;
+  font-family: $font-family-display;
+  font-size: $font-size-5xl;
+  font-weight: $font-weight-bold;
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: $spacing-2;
 
   @media (max-width: $breakpoint-md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+.stat-label {
+  display: block;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  color: var(--color-gray);
+}
+
+// 亮点卡片
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-4;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-sm) {
     grid-template-columns: 1fr;
   }
 }
 
 .highlight-card {
-  padding: var(--spacing-6);
+  display: flex;
+  gap: $spacing-4;
+  padding: $spacing-6;
   background: var(--color-background);
-  border-radius: var(--border-radius-lg);
-  text-align: center;
-  transition: all var(--transition-base) var(--ease-out);
+  border: 1px solid var(--color-border);
+  transition: border-color $transition-fast $ease-default;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
-
-  &--delay {
-    animation: fadeIn 0.6s var(--ease-out) 0.2s backwards;
+    border-color: var(--color-accent);
   }
 }
 
 .highlight-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  margin-bottom: var(--spacing-4);
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-  color: var(--color-background);
+  font-size: 28px;
+  flex-shrink: 0;
+  line-height: 1;
 }
 
-.highlight-label {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-black);
-  margin-bottom: var(--spacing-2);
+.highlight-info {
+  h4 {
+    font-family: $font-family-display;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: var(--color-primary-dark);
+    margin-bottom: $spacing-1;
+  }
+
+  p {
+    font-family: $font-family-base;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-normal;
+    color: var(--color-gray);
+    line-height: $line-height-normal;
+  }
 }
 
-.highlight-desc {
-  font-size: var(--font-size-sm);
-  color: var(--color-gray);
-  line-height: var(--line-height-normal);
+// 滚动动画
+.animate-on-enter {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: all 0.5s $ease-default;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

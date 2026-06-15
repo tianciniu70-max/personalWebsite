@@ -3,53 +3,56 @@ export default {
   nav: {
     home: 'Home',
     about: 'About',
+    experience: 'Experience',
     skills: 'Skills',
     projects: 'Projects',
-    design: 'Design',
-    career: 'Career',
     contact: 'Contact'
   },
 
   // Hero Section
   hero: {
-    tagline: 'Design Thinking × Frontend Engineering',
+    status: 'Open to Work',
+    statusIcon: '🔥',
+    tagline: 'Frontend Developer',
     greeting: 'Hello, I\'m a',
-    name: 'Frontend Engineer',
+    name: 'Frontend Developer',
     experience: '5 Years of Enterprise Development',
     specialization: 'Vue3 Ecosystem / Data Visualization / Component Architecture',
+    availability: 'Available for opportunities',
     cta: {
       primary: 'View Projects',
-      secondary: 'Download Resume'
+      secondary: 'Download Resume',
+      contact: 'Contact Me'
     }
   },
 
   // About Section
   about: {
     title: 'About Me',
-    subtitle: 'From Fashion Design to Frontend: Design-Driven Development',
+    subtitle: 'Design × Engineering',
     story: `I am a frontend engineer with 5 years of experience, and a career changer with a unique background.
     I graduated with a degree in Fashion Design, which gave me a keen eye for visual aesthetics and user experience.
 
     Since transitioning to frontend development, I've integrated design thinking into code implementation:
     Approaching interaction logic from a UX perspective, optimizing information architecture with visual hierarchy skills,
-    and building maintainable component systems with design standards in mind.
-
-    Throughout my career, I've independently led multiple large-scale enterprise projects,
-    including MES systems, data visualization platforms, and enterprise admin dashboards.
-    These experiences have deepened my understanding of business requirements and
-    my ability to transform complex needs into elegant frontend solutions.`,
+    and building maintainable component systems with design standards in mind.`,
     highlights: [
       { label: 'Cross-Disciplinary', desc: 'Design background × Engineering mindset' },
       { label: '5 Years Exp', desc: 'End-to-end development of large-scale projects' },
       { label: 'Technical Depth', desc: 'Vue3 / Component Architecture / Engineering' },
-      { label: 'Japan Career', desc: 'Seeking long-term frontend opportunities in Japan' }
+      { label: 'Detail Oriented', desc: 'Pixel-perfect implementation with design awareness' }
+    ],
+    stats: [
+      { number: '5+', label: 'Years Experience' },
+      { number: '13+', label: 'Projects Delivered' },
+      { number: '100%', label: 'Client Satisfaction' }
     ]
   },
 
   // Skills Section
   skills: {
     title: 'Skills',
-    subtitle: 'Frontend Core × Engineering × Data Visualization',
+    subtitle: 'Technical Stack & Tools',
     categories: [
       {
         name: 'Core Frontend',
@@ -77,7 +80,7 @@ export default {
   // Projects Section
   projects: {
     title: 'Projects',
-    subtitle: 'Enterprise-Level Frontend Project Experience',
+    subtitle: 'Enterprise-Level Project Experience',
     items: [
       {
         id: 'mes',
@@ -139,81 +142,36 @@ export default {
     ]
   },
 
-  // Design Thinking Section
-  designThinking: {
-    title: 'Design Thinking',
-    subtitle: 'Unique Advantages from Design Background',
-    intro: 'My background in fashion design is not a story of "career change," but of "integration." Design training cultivated three core competencies that directly translate to frontend development advantages:',
-    pillars: [
-      {
-        title: 'User Perspective',
-        desc: 'Designing interactions from a user experience standpoint, not just implementing features',
-        examples: [
-          'Considering user scenarios and expectations',
-          'Designing intuitive interaction feedback',
-          'Focusing on accessibility and usability'
-        ]
-      },
-      {
-        title: 'Visual Hierarchy',
-        desc: 'Applying visual design principles to organize information architecture',
-        examples: [
-          'Establishing visual order through contrast, alignment, repetition',
-          'Using whitespace to guide user attention',
-          'Designing clear information hierarchy and reading paths'
-        ]
-      },
-      {
-        title: 'Attention to Detail',
-        desc: 'Pixel-perfect pursuit for refined product experience',
-        examples: [
-          'Ensuring natural and smooth animation transitions',
-          'Polishing visual feedback for interaction states',
-          'Maintaining design system consistency'
-        ]
-      }
-    ],
-    closing: 'These capabilities enable me to not only write code but also collaborate efficiently with designers, understand design intent, and accurately translate it into high-quality frontend implementation.'
-  },
-
-  // Japan Career Section
-  japanCareer: {
-    title: 'Career in Japan',
-    subtitle: 'Seeking Long-term Frontend Development Opportunities',
-    motivation: `My motivation for working in Japan comes from admiration for Japanese digital products and international teams.
-    The Japanese market's high standards for product quality and user experience align perfectly with my pursuit of technical excellence.
-    I appreciate the sense of responsibility, team collaboration spirit, and long-term values in Japanese corporate culture.`,
-    whyJapan: [
-      { title: 'Quality Culture', desc: 'Japanese emphasis on product details and quality aligns perfectly with my development philosophy' },
-      { title: 'Growth Environment', desc: 'Seeking continuous learning in Japanese technical environment and participation in international projects' },
-      { title: 'Long-term Career', desc: 'Looking for stable long-term opportunities and building a career in Japan' }
-    ],
-    language: {
-      status: 'Studying Japanese',
-      level: 'N4 → N3 Target',
-      commitment: 'Continuously improving Japanese skills to integrate into team collaboration'
-    },
-    valueProposition: 'What I bring to Japanese companies:',
-    values: [
-      '5 years of enterprise Vue3 development experience',
-      'Data visualization and complex interaction development capabilities',
-      'User experience awareness from design background',
-      'Cross-disciplinary learning ability and adaptability',
-      'Commitment to stable, long-term employment'
-    ]
-  },
-
   // Contact Section
   contact: {
-    title: 'Contact',
-    subtitle: 'Looking Forward to Discussing Opportunities',
+    title: 'Get in Touch',
+    subtitle: 'Let\'s Connect',
+    intro: 'If you\'re interested in my background or have any opportunities, please feel free to reach out',
     channels: [
-      { type: 'Email', value: 'your.email@example.com', icon: 'email', url: 'mailto:your.email@example.com' },
-      { type: 'GitHub', value: 'github.com/yourusername', icon: 'github', url: 'https://github.com/yourusername' },
-      { type: 'LinkedIn', value: 'linkedin.com/in/yourprofile', icon: 'linkedin', url: 'https://linkedin.com/in/yourprofile' },
-      { type: 'WeChat', value: 'your_wechat_id', icon: 'wechat', url: '' }
+      {
+        type: 'GitHub',
+        value: 'github.com/yourusername',
+        icon: 'github',
+        description: 'Check out my code',
+        url: 'https://github.com/yourusername'
+      },
+      {
+        type: 'Email',
+        value: 'your.email@example.com',
+        icon: 'email',
+        description: 'Send me an email',
+        url: 'mailto:your.email@example.com'
+      },
+      {
+        type: 'WeChat',
+        value: 'your_wechat_id',
+        icon: 'wechat',
+        description: 'Connect on WeChat',
+        url: ''
+      }
     ],
-    cta: 'Looking forward to connecting with you'
+    cta: 'Looking forward to connecting with you',
+    emailCta: 'Send Email'
   },
 
   // Footer

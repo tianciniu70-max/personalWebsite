@@ -1,74 +1,117 @@
 <template>
-  <SectionContainer id="contact">
-    <h2 class="section-title">{{ t('contact.title') }}</h2>
-    <p class="section-subtitle">{{ t('contact.subtitle') }}</p>
-
-    <div class="contact">
-      <div class="contact-channels">
-        <a
-          v-for="channel in channels"
-          :key="channel.type"
-          :href="channel.url"
-          :title="channel.type"
-          class="contact-card"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <div class="contact-icon">
-            <el-icon :size="32">
-              <component :is="getContactIcon(channel.icon)" />
-            </el-icon>
-          </div>
-          <h4 class="contact-type">{{ channel.type }}</h4>
-          <p class="contact-value">{{ channel.value }}</p>
-        </a>
-      </div>
-
-      <div class="contact-cta">
-        <p class="cta-text">{{ t('contact.cta') }}</p>
-        <button class="btn btn--primary btn--large">
-          <el-icon><Message /></el-icon>
-          {{ currentLocale === 'zh' ? '发送邮件' : 'Send Email' }}
-        </button>
-      </div>
+  <section class="contact" id="contact">
+    <!-- 区域标题 -->
+    <div class="section-header">
+      <span class="section-label animate-on-enter">{{ t('contact.subtitle') }}</span>
+      <h2 class="section-title animate-on-enter">{{ t('contact.title') }}</h2>
+      <p class="contact-intro animate-on-enter">{{ t('contact.intro') }}</p>
     </div>
-  </SectionContainer>
+
+    <!-- 联系方式 -->
+    <div class="contact-grid animate-on-enter">
+      <a
+        v-for="channel in channels"
+        :key="channel.type"
+        :href="channel.url"
+        class="contact-card"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="contact-icon">{{ getContactIcon(channel.icon) }}</span>
+        <span class="contact-type">{{ channel.type }}</span>
+        <span class="contact-desc">{{ channel.description }}</span>
+      </a>
+    </div>
+
+    <!-- CTA -->
+    <div class="contact-cta animate-on-enter">
+      <p class="cta-text">{{ t('contact.cta') }}</p>
+      <a href="mailto:your.email@example.com" class="cta-button">
+        {{ t('contact.emailCta') }}
+        <span class="cta-arrow">→</span>
+      </a>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import SectionContainer from '@/components/Layout/SectionContainer.vue'
-import { Message, Link as LinkIcon, Promotion, ChatDotRound } from '@element-plus/icons-vue'
 
-const { t, locale, tm } = useI18n()
+const { t, tm } = useI18n()
 
-const currentLocale = computed(() => locale.value)
 const channels = computed(() => tm('contact.channels') as any[])
 
-const iconMap: Record<string, any> = {
-  email: Message,
-  github: LinkIcon,
-  linkedin: Promotion,
-  wechat: ChatDotRound
-}
-
 const getContactIcon = (iconName: string) => {
-  return iconMap[iconName] || Message
+  const icons: Record<string, string> = {
+    wechat: '💬',
+    github: '⌘',
+    email: '✉'
+  }
+  return icons[iconName] || '●'
 }
 </script>
 
 <style lang="scss" scoped>
+@use '@/styles/variables.scss' as *;
+
 .contact {
-  max-width: 800px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
+  padding: $spacing-32 $spacing-8;
+  background: var(--color-background-alt);
 }
 
-.contact-channels {
+// 区域标题
+.section-header {
+  text-align: center;
+  margin-bottom: $spacing-16;
+}
+
+.section-label {
+  display: inline-block;
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: var(--color-accent);
+  letter-spacing: $letter-spacing-wider;
+  text-transform: uppercase;
+  margin-bottom: $spacing-3;
+}
+
+.section-title {
+  font-family: $font-family-display;
+  font-size: $font-size-5xl;
+  font-weight: $font-weight-bold;
+  color: var(--color-primary-dark);
+  letter-spacing: $letter-spacing-tighter;
+  line-height: $line-height-tight;
+  margin-bottom: $spacing-4;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+.contact-intro {
+  font-family: $font-family-base;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  color: var(--color-gray);
+  max-width: 600px;
+  margin: 0 auto;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-base;
+  }
+}
+
+// 联系方式网格
+.contact-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-6);
-  margin-bottom: var(--spacing-12);
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-6;
+  margin-bottom: $spacing-16;
 
   @media (max-width: $breakpoint-md) {
     grid-template-columns: 1fr;
@@ -79,66 +122,93 @@ const getContactIcon = (iconName: string) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--spacing-8);
-  background: var(--color-background-alt);
-  border-radius: var(--border-radius-lg);
   text-align: center;
-  transition: all var(--transition-base) var(--ease-out);
+  padding: $spacing-8;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  text-decoration: none;
+  transition: border-color $transition-fast $ease-default;
 
   &:hover {
-    background: var(--color-primary);
-    color: var(--color-background);
-
-    .contact-icon {
-      background: var(--color-background);
-      color: var(--color-primary);
-    }
+    border-color: var(--color-accent);
   }
 }
 
 .contact-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 64px;
-  margin-bottom: var(--spacing-4);
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: var(--color-background);
-  transition: all var(--transition-base) var(--ease-out);
+  font-size: 36px;
+  margin-bottom: $spacing-4;
+  line-height: 1;
 }
 
 .contact-type {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--spacing-2);
+  font-family: $font-family-display;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: var(--color-primary-dark);
+  margin-bottom: $spacing-1;
 }
 
-.contact-value {
-  font-size: var(--font-size-sm);
+.contact-desc {
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-normal;
   color: var(--color-gray);
-  word-break: break-all;
-
-  .contact-card:hover & {
-    color: var(--color-background-alt);
-  }
 }
 
+// CTA
 .contact-cta {
   text-align: center;
-  padding: var(--spacing-8);
-  background: var(--color-background-alt);
-  border-radius: var(--border-radius-lg);
+  padding: $spacing-12;
+  background: var(--color-primary);
 }
 
 .cta-text {
-  font-size: var(--font-size-xl);
-  color: var(--color-dark-gray);
-  margin-bottom: var(--spacing-6);
+  font-family: $font-family-base;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-normal;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: $spacing-8;
 
   @media (max-width: $breakpoint-md) {
-    font-size: var(--font-size-lg);
+    font-size: $font-size-lg;
+  }
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-3;
+  padding: $spacing-4 $spacing-8;
+  font-family: $font-family-base;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: var(--color-primary);
+  background: #FFFFFF;
+  text-decoration: none;
+  transition: opacity $transition-fast $ease-default;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.cta-arrow {
+  transition: transform $transition-fast $ease-default;
+
+  .cta-button:hover & {
+    transform: translateX(4px);
+  }
+}
+
+// 滚动动画
+.animate-on-enter {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: all 0.5s $ease-default;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>

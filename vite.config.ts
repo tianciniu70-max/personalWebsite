@@ -14,7 +14,14 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         api: 'modern-compiler',
-        additionalData: `@use "@/styles/variables.scss" as *;`
+        additionalData: (content: string, filePath: string) => {
+          // 只在非 CN 组件中注入 variables.scss
+          const isCNFile = filePath.match(/\/CN\//) || filePath.indexOf('HomePageCN') >= 0;
+          if (!isCNFile) {
+            return `@use "@/styles/variables.scss" as *;\n${content}`;
+          }
+          return content;
+        }
       }
     }
   },

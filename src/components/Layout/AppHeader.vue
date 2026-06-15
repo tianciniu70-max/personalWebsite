@@ -1,116 +1,111 @@
 <template>
   <header class="app-header" :class="{ 'app-header--scrolled': isScrolled }">
-    <div class="container">
-      <nav class="nav">
-        <div class="nav-brand">
-          <a href="#hero" class="brand-link">
-            <span class="brand-text">{{ t('hero.tagline') }}</span>
-          </a>
-        </div>
+    <nav class="header-inner">
+      <!-- Logo -->
+      <a href="#hero" class="logo">
+        <span class="logo-text">T.C.</span>
+      </a>
 
-        <div class="nav-menu" :class="{ 'nav-menu--open': isMenuOpen }">
-          <a
-            v-for="item in navItems"
-            :key="item.key"
-            :href="`#${item.key}`"
-            class="nav-link"
-            :class="{ 'nav-link--active': activeSection === item.key }"
-            @click="closeMenu"
-          >
-            <span class="nav-link-text">{{ item.label }}</span>
-            <span class="nav-link-indicator"></span>
-          </a>
+      <!-- 桌面端导航 -->
+      <div class="nav-links">
+        <a
+          v-for="item in navItems"
+          :key="item.key"
+          :href="`#${item.key}`"
+          class="nav-link"
+          :class="{ 'nav-link--active': activeSection === item.key }"
+        >
+          {{ item.label }}
+        </a>
+      </div>
 
-          <div class="lang-switcher-wrapper">
-            <button class="lang-switcher" @click="toggleLanguage" :title="`Switch to ${nextLocaleName}`">
-              <span class="lang-current">{{ localeLabel }}</span>
-              <el-icon class="lang-icon"><CaretBottom /></el-icon>
-            </button>
-          </div>
-        </div>
+      <!-- 右侧操作区 -->
+      <div class="header-actions">
+        <button class="lang-toggle" @click="toggleLanguage">
+          {{ localeLabel }}
+        </button>
+        <a href="#contact" class="cta-btn">
+          {{ t('hero.cta.secondary') }}
+        </a>
 
-        <button class="menu-toggle" @click="toggleMenu" :aria-expanded="isMenuOpen" aria-label="Toggle menu">
-          <span class="menu-toggle-lines">
-            <span class="line"></span>
-            <span class="line"></span>
-            <span class="line"></span>
+        <!-- 移动端菜单按钮 -->
+        <button class="mobile-btn" @click="toggleMobileMenu" aria-label="Toggle menu">
+          <span class="mobile-hamburger" :class="{ 'is-active': isMobileMenuOpen }">
+            <span></span>
+            <span></span>
+            <span></span>
           </span>
         </button>
-      </nav>
-    </div>
+      </div>
+    </nav>
+
+    <!-- 移动端全屏菜单 -->
+    <transition name="mobile-slide">
+      <div v-if="isMobileMenuOpen" class="mobile-menu">
+        <a
+          v-for="item in navItems"
+          :key="item.key"
+          :href="`#${item.key}`"
+          class="mobile-link"
+          @click="closeMobileMenu"
+        >
+          {{ item.label }}
+        </a>
+        <button class="mobile-lang-btn" @click="toggleLanguage">
+          {{ localeLabel }}
+        </button>
+      </div>
+    </transition>
   </header>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { CaretBottom } from '@element-plus/icons-vue'
 
 const { locale, t } = useI18n()
 
-const isMenuOpen = ref(false)
 const isScrolled = ref(false)
-const activeSection = ref('hero')
+const isMobileMenuOpen = ref(false)
+const activeSection = ref('')
 
-const locales = ['zh', 'en', 'ja'] as const
+const locales = ['zh', 'en'] as const
 
 const localeLabel = computed(() => {
   switch (locale.value) {
     case 'zh': return '中文'
     case 'en': return 'EN'
-    case 'ja': return '日本語'
     default: return 'EN'
   }
 })
 
-const nextLocaleName = computed(() => {
-  const currentIndex = locales.indexOf(locale.value as typeof locales[number])
-  const nextIndex = (currentIndex + 1) % locales.length
-  const nextLocale = locales[nextIndex]
-  return nextLocale === 'zh' ? '中文' : nextLocale === 'ja' ? '日本語' : 'English'
-})
-
 const navItems = computed(() => [
   { key: 'about', label: t('nav.about') },
+  { key: 'experience', label: t('nav.experience') || 'Experience' },
   { key: 'skills', label: t('nav.skills') },
-  { key: 'projects', label: t('nav.projects') },
-  { key: 'design', label: t('nav.design') },
-  { key: 'career', label: t('nav.career') },
-  { key: 'contact', label: t('nav.contact') }
+  { key: 'projects', label: t('nav.projects') }
 ])
-
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
-  document.body.style.overflow = isMenuOpen.value ? 'hidden' : ''
-}
-
-const closeMenu = () => {
-  isMenuOpen.value = false
-  document.body.style.overflow = ''
-}
 
 const toggleLanguage = () => {
   const currentIndex = locales.indexOf(locale.value as typeof locales[number])
   const nextIndex = (currentIndex + 1) % locales.length
   locale.value = locales[nextIndex]
   document.documentElement.lang = locale.value
+  closeMobileMenu()
+}
+
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+  document.body.style.overflow = isMobileMenuOpen.value ? 'hidden' : ''
+}
+
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false
+  document.body.style.overflow = ''
 }
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50
-
-  // Update active section based on scroll position
-  const sections = navItems.value.map(item => item.key)
-  for (const section of sections.reverse()) {
-    const element = document.getElementById(section)
-    if (element) {
-      const rect = element.getBoundingClientRect()
-      if (rect.top <= 100) {
-        activeSection.value = section
-        break
-      }
-    }
-  }
+  isScrolled.value = window.scrollY > 20
 }
 
 onMounted(() => {
@@ -123,6 +118,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '@/styles/variables.scss' as *;
 
 .app-header {
   position: fixed;
@@ -131,277 +127,213 @@ onUnmounted(() => {
   right: 0;
   height: var(--header-height);
   z-index: var(--z-index-fixed);
-  transition: all var(--transition-base) var(--ease-out);
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  background: #FFFFFF;
   border-bottom: 1px solid transparent;
+  transition: border-color $transition-fast $ease-default;
 
   &--scrolled {
-    background: rgba(255, 255, 255, 0.95);
     border-bottom-color: var(--color-border);
-    box-shadow: var(--shadow-sm);
   }
 }
 
-.nav {
+.header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 $spacing-8;
 }
 
-.nav-brand {
-  .brand-link {
-    text-decoration: none;
-    display: block;
-  }
-
-  .brand-text {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    background: linear-gradient(135deg, var(--color-primary) 0%, #00c6ff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: $letter-spacing-tight;
-  }
+// Logo
+.logo {
+  text-decoration: none;
 }
 
-.nav-menu {
+.logo-text {
+  font-family: $font-family-display;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: var(--color-primary);
+  letter-spacing: $letter-spacing-tight;
+}
+
+// 桌面导航
+.nav-links {
   display: flex;
   align-items: center;
-  gap: var(--spacing-1);
-
-  @media (max-width: $breakpoint-lg) {
-    gap: 0;
-  }
-}
-
-.nav-link {
-  position: relative;
-  padding: var(--spacing-3) var(--spacing-4);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-gray);
-  text-decoration: none;
-  transition: color var(--transition-base) var(--ease-out);
-  white-space: nowrap;
-
-  &:hover {
-    color: var(--color-primary);
-
-    .nav-link-indicator {
-      opacity: 1;
-      transform: scaleX(1);
-    }
-  }
-
-  &--active {
-    color: var(--color-primary);
-
-    .nav-link-indicator {
-      opacity: 1;
-      transform: scaleX(1);
-    }
-  }
-
-  @media (max-width: $breakpoint-lg) {
-    font-size: var(--font-size-xl);
-    padding: var(--spacing-4) var(--spacing-6);
-  }
-}
-
-.nav-link-text {
-  position: relative;
-  z-index: 1;
-}
-
-.nav-link-indicator {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 20px;
-  height: 2px;
-  background: var(--color-primary);
-  border-radius: var(--border-radius-full);
-  opacity: 0;
-  transform: translateX(-50%) scaleX(0);
-  transition: all var(--transition-base) var(--ease-out);
+  gap: $spacing-8;
 
   @media (max-width: $breakpoint-lg) {
     display: none;
   }
 }
 
-.lang-switcher-wrapper {
-  margin-left: var(--spacing-4);
-  padding-left: var(--spacing-4);
-  border-left: 1px solid var(--color-border);
+.nav-link {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--color-gray);
+  text-decoration: none;
+  transition: color $transition-fast $ease-default;
 
-  @media (max-width: $breakpoint-lg) {
-    margin-left: 0;
-    padding-left: 0;
-    border-left: none;
-    margin-top: var(--spacing-8);
+  &:hover,
+  &--active {
+    color: var(--color-primary-dark);
   }
 }
 
-.lang-switcher {
+// 右侧操作区
+.header-actions {
   display: flex;
   align-items: center;
-  gap: var(--spacing-1);
-  padding: var(--spacing-2) var(--spacing-3);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
+  gap: $spacing-4;
+}
+
+.lang-toggle {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
   color: var(--color-gray);
-  background: var(--color-background-alt);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-full);
-  transition: all var(--transition-base) var(--ease-out);
+  background: none;
+  border: none;
   cursor: pointer;
+  padding: $spacing-2 $spacing-3;
+  transition: color $transition-fast $ease-default;
 
   &:hover {
-    background: var(--color-background);
-    border-color: var(--color-primary);
     color: var(--color-primary);
   }
 
   @media (max-width: $breakpoint-lg) {
-    font-size: var(--font-size-base);
-    padding: var(--spacing-3) var(--spacing-5);
+    display: none;
   }
 }
 
-.lang-current {
-  white-space: nowrap;
-}
-
-.lang-icon {
-  font-size: 10px;
-  transition: transform var(--transition-base) var(--ease-out);
-}
-
-.lang-switcher:hover .lang-icon {
-  transform: translateY(2px);
-}
-
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  border-radius: var(--border-radius-md);
-  transition: background var(--transition-base) var(--ease-out);
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-2 $spacing-5;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: #FFFFFF;
+  background: var(--color-primary);
+  text-decoration: none;
+  transition: background $transition-fast $ease-default;
 
   &:hover {
-    background: var(--color-background-alt);
+    background: var(--color-primary-dark);
   }
+
+  @media (max-width: $breakpoint-lg) {
+    display: none;
+  }
+}
+
+// 移动端按钮
+.mobile-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
 
   @media (max-width: $breakpoint-lg) {
     display: flex;
   }
 }
 
-.menu-toggle-lines {
-  position: relative;
-  width: 20px;
-  height: 14px;
-}
+.mobile-hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 18px;
 
-.line {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--color-charcoal);
-  border-radius: var(--border-radius-full);
-  transition: all var(--transition-base) var(--ease-out);
-
-  &:nth-child(1) {
-    top: 0;
-  }
-
-  &:nth-child(2) {
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  &:nth-child(3) {
-    bottom: 0;
-  }
-}
-
-.menu-toggle:hover .line {
-  &:nth-child(1) {
-    width: 70%;
-  }
-
-  &:nth-child(3) {
-    width: 70%;
-    left: auto;
-    right: 0;
-  }
-}
-
-// 移动端菜单样式
-@media (max-width: $breakpoint-lg) {
-  .nav-menu {
-    position: fixed;
-    top: var(--header-height);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: var(--spacing-2);
-    padding: var(--spacing-8);
-    background: var(--color-background);
-    transform: translateX(100%);
-    transition: transform var(--transition-slow) var(--ease-in-out);
-
-    &--open {
-      transform: translateX(0);
-    }
-  }
-
-  .nav-link {
+  span {
+    display: block;
     width: 100%;
-    text-align: center;
-    border-radius: var(--border-radius-md);
+    height: 2px;
+    background: var(--color-primary);
+    transition: all $transition-fast $ease-default;
 
-    &:hover {
-      background: var(--color-background-alt);
-    }
-  }
-
-  .lang-switcher-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .menu-toggle {
-    .line:nth-child(1) {
-      transform: rotate(45deg);
-      top: 6px;
+    .is-active &:nth-child(1) {
+      transform: rotate(45deg) translate(4px, 4px);
     }
 
-    .line:nth-child(2) {
+    .is-active &:nth-child(2) {
       opacity: 0;
     }
 
-    .line:nth-child(3) {
-      transform: rotate(-45deg);
-      bottom: 6px;
+    .is-active &:nth-child(3) {
+      transform: rotate(-45deg) translate(4px, -4px);
     }
   }
+}
+
+// 移动端菜单
+.mobile-menu {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-6;
+  z-index: calc(var(--z-index-fixed) - 1);
+
+  @media (min-width: $breakpoint-lg) {
+    display: none;
+  }
+}
+
+.mobile-link {
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: opacity $transition-fast $ease-default;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.mobile-lang-btn {
+  margin-top: $spacing-4;
+  padding: $spacing-3 $spacing-6;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: var(--color-accent);
+  background: var(--color-muted);
+  border: none;
+  cursor: pointer;
+  transition: background $transition-fast $ease-default;
+
+  &:hover {
+    background: var(--color-border);
+  }
+}
+
+// 移动端菜单过渡
+.mobile-slide-enter-active,
+.mobile-slide-leave-active {
+  transition: transform 0.3s $ease-default;
+}
+
+.mobile-slide-enter-from,
+.mobile-slide-leave-to {
+  transform: translateX(100%);
 }
 </style>

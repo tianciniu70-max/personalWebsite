@@ -1,127 +1,139 @@
 <template>
-  <SectionContainer id="skills">
-    <h2 class="section-title">{{ t('skills.title') }}</h2>
-    <p class="section-subtitle">{{ t('skills.subtitle') }}</p>
+  <section class="skills" id="skills">
+    <!-- 区域标题 -->
+    <div class="section-header">
+      <span class="section-label animate-on-enter">{{ t('skills.subtitle') }}</span>
+      <h2 class="section-title animate-on-enter">{{ t('skills.title') }}</h2>
+    </div>
 
-    <div class="skills">
+    <!-- 技能卡片网格 -->
+    <div class="skills-grid">
       <div
         v-for="(category, index) in categories"
-        :key="category.name"
-        class="skill-category"
-        :class="{ 'skill-category--delay': index }"
+        :key="index"
+        class="skill-card animate-on-enter"
       >
-        <div class="skill-header">
-          <el-icon :size="32" :color="getCategoryColor(index)">
-            <component :is="getCategoryIcon(category.icon)" />
-          </el-icon>
-          <h3 class="skill-title">{{ category.name }}</h3>
-        </div>
-        <ul class="skill-list">
-          <li v-for="item in category.items" :key="item" class="skill-item">
-            <span class="skill-bullet"></span>
+        <h3 class="skill-card-title">{{ category.name }}</h3>
+        <div class="skill-tags">
+          <span v-for="item in category.items" :key="item" class="skill-tag">
             {{ item }}
-          </li>
-        </ul>
+          </span>
+        </div>
       </div>
     </div>
-  </SectionContainer>
+  </section>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import SectionContainer from '@/components/Layout/SectionContainer.vue'
-import { Management, Tools, DataAnalysis, Link } from '@element-plus/icons-vue'
 
 const { t, tm } = useI18n()
 
 const categories = computed(() => tm('skills.categories') as any[])
-
-const iconMap: Record<string, any> = {
-  code: Management,
-  tool: Tools,
-  chart: DataAnalysis,
-  git: Link
-}
-
-const getCategoryIcon = (iconName: string) => {
-  return iconMap[iconName] || Management
-}
-
-const colors = ['#2563eb', '#10b981', '#f59e0b', '#ef4444']
-
-const getCategoryColor = (index: number) => {
-  return colors[index % colors.length]
-}
 </script>
 
 <style lang="scss" scoped>
+@use '@/styles/variables.scss' as *;
+
 .skills {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-8);
-  margin-top: var(--spacing-12);
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: $spacing-32 $spacing-8;
+  background: var(--color-background-alt);
+}
+
+// 区域标题
+.section-header {
+  text-align: center;
+  margin-bottom: $spacing-16;
+}
+
+.section-label {
+  display: inline-block;
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: var(--color-accent);
+  letter-spacing: $letter-spacing-wider;
+  text-transform: uppercase;
+  margin-bottom: $spacing-3;
+}
+
+.section-title {
+  font-family: $font-family-display;
+  font-size: $font-size-5xl;
+  font-weight: $font-weight-bold;
+  color: var(--color-primary-dark);
+  letter-spacing: $letter-spacing-tighter;
+  line-height: $line-height-tight;
 
   @media (max-width: $breakpoint-md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+// 技能卡片
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-6;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-sm) {
     grid-template-columns: 1fr;
   }
 }
 
-.skill-category {
-  padding: var(--spacing-8);
-  background: var(--color-background-alt);
-  border-radius: var(--border-radius-lg);
-  transition: all var(--transition-base) var(--ease-out);
+.skill-card {
+  padding: $spacing-8;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  transition: border-color $transition-fast $ease-default;
 
   &:hover {
-    background: var(--color-background);
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-4px);
-  }
-
-  &--delay {
-    animation: fadeIn 0.6s var(--ease-out) backwards;
-
-    @for $i from 1 through 4 {
-      &:nth-child(#{$i}) &--delay {
-        animation-delay: #{$i * 0.1}s;
-      }
-    }
+    border-color: var(--color-accent);
   }
 }
 
-.skill-header {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-4);
-  margin-bottom: var(--spacing-6);
+.skill-card-title {
+  font-family: $font-family-display;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: var(--color-primary-dark);
+  margin-bottom: $spacing-5;
+  padding-bottom: $spacing-4;
+  border-bottom: 1px solid var(--color-border);
 }
 
-.skill-title {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-black);
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
 }
 
-.skill-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-3);
-}
-
-.skill-item {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-3);
-  font-size: var(--font-size-base);
+.skill-tag {
+  display: inline-block;
+  padding: $spacing-1 $spacing-3;
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
   color: var(--color-dark-gray);
+  background: var(--color-muted);
 }
 
-.skill-bullet {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  flex-shrink: 0;
+// 滚动动画
+.animate-on-enter {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: all 0.5s $ease-default;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
