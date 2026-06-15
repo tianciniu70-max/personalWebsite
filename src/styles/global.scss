@@ -1,0 +1,197 @@
+// ============================================
+// Global Styles
+// ============================================
+
+@import './variables.scss';
+@import './reset.scss';
+
+// ============================================
+// Utility Classes
+// ============================================
+
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-4);
+
+  @media (min-width: $breakpoint-md) {
+    padding: 0 var(--spacing-6);
+  }
+}
+
+.section {
+  padding: var(--spacing-12) 0;
+  min-height: 60vh;
+
+  &--hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+  }
+
+  &--alt {
+    background-color: var(--color-background-alt);
+  }
+}
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+// ============================================
+// Animations
+// ============================================
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s var(--ease-out) forwards;
+}
+
+// ============================================
+// Component Base Styles
+// ============================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-base) var(--ease-out);
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &--primary {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+
+    &:hover {
+      background-color: var(--color-primary-dark);
+    }
+  }
+
+  &--outline {
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    background-color: transparent;
+
+    &:hover {
+      background-color: var(--color-primary);
+      color: var(--color-background);
+    }
+  }
+
+  &--large {
+    padding: var(--spacing-4) var(--spacing-8);
+    font-size: var(--font-size-lg);
+  }
+}
+
+.card {
+  background: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-6);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base) var(--ease-out);
+
+  &:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+  }
+}
+
+// ============================================
+// Typography Enhancements
+// ============================================
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-4);
+  text-align: center;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+.section-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-gray);
+  text-align: center;
+  margin-bottom: var(--spacing-12);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: var(--font-size-base);
+  }
+}
+
+// ============================================
+// Responsive Utilities
+// ============================================
+
+.hide-mobile {
+  @media (max-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+.hide-desktop {
+  @media (min-width: $breakpoint-md) {
+    display: none;
+  }
+}
