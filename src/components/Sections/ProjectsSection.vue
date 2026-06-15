@@ -62,10 +62,10 @@ import { useI18n } from 'vue-i18n'
 import SectionContainer from '@/components/Layout/SectionContainer.vue'
 import { Cpu, List, Trophy } from '@element-plus/icons-vue'
 
-const { t, locale } = useI18n()
+const { t, locale, tm } = useI18n()
 
 const currentLocale = computed(() => locale.value)
-const projects = computed(() => t('projects.items') as unknown as any[])
+const projects = computed(() => tm('projects.items') as any[])
 </script>
 
 <style lang="scss" scoped>

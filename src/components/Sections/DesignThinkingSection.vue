@@ -39,9 +39,9 @@ import { useI18n } from 'vue-i18n'
 import SectionContainer from '@/components/Layout/SectionContainer.vue'
 import { User, View, Pointer } from '@element-plus/icons-vue'
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
 
-const pillars = computed(() => t('designThinking.pillars') as unknown as any[])
+const pillars = computed(() => tm('designThinking.pillars') as any[])
 
 const pillarIcons = [User, View, Pointer]
 

@@ -32,9 +32,9 @@ import { useI18n } from 'vue-i18n'
 import SectionContainer from '@/components/Layout/SectionContainer.vue'
 import { MagicStick, Briefcase, TrendCharts, Location } from '@element-plus/icons-vue'
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
 
-const highlights = computed(() => t('about.highlights') as unknown as any[])
+const highlights = computed(() => tm('about.highlights') as any[])
 
 const formattedStory = computed(() => {
   const story = t('about.story')

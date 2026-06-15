@@ -65,11 +65,11 @@ import { useI18n } from 'vue-i18n'
 import SectionContainer from '@/components/Layout/SectionContainer.vue'
 import { InfoFilled, ChatDotRound, Star, Medal, TrophyBase, TrendCharts } from '@element-plus/icons-vue'
 
-const { t, locale } = useI18n()
+const { t, locale, tm } = useI18n()
 
 const currentLocale = computed(() => locale.value)
-const whyJapan = computed(() => t('japanCareer.whyJapan') as unknown as any[])
-const values = computed(() => t('japanCareer.values') as unknown as string[])
+const whyJapan = computed(() => tm('japanCareer.whyJapan') as any[])
+const values = computed(() => tm('japanCareer.values') as string[])
 
 const whyIcons = [Medal, TrophyBase, TrendCharts]
 

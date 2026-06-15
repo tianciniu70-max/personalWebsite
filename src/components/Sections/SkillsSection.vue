@@ -33,9 +33,9 @@ import { useI18n } from 'vue-i18n'
 import SectionContainer from '@/components/Layout/SectionContainer.vue'
 import { Management, Tools, DataAnalysis, Link } from '@element-plus/icons-vue'
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
 
-const categories = computed(() => t('skills.categories') as unknown as any[])
+const categories = computed(() => tm('skills.categories') as any[])
 
 const iconMap: Record<string, any> = {
   code: Management,

@@ -41,10 +41,10 @@ import { useI18n } from 'vue-i18n'
 import SectionContainer from '@/components/Layout/SectionContainer.vue'
 import { Message, Link as LinkIcon, Promotion, ChatDotRound } from '@element-plus/icons-vue'
 
-const { t, locale } = useI18n()
+const { t, locale, tm } = useI18n()
 
 const currentLocale = computed(() => locale.value)
-const channels = computed(() => t('contact.channels') as unknown as any[])
+const channels = computed(() => tm('contact.channels') as any[])
 
 const iconMap: Record<string, any> = {
   email: Message,
