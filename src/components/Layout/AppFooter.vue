@@ -3,7 +3,9 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <h3 class="footer-title">{{ t('hero.tagline') }}</h3>
+          <div class="footer-logo">
+            <span class="footer-logo-text">{{ t('hero.tagline') }}</span>
+          </div>
           <p class="footer-tagline">{{ t('hero.specialization') }}</p>
         </div>
 
@@ -17,7 +19,7 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            <component :is="channel.icon" :size="20" />
+            <component :is="channel.icon" />
           </a>
         </div>
       </div>
@@ -36,7 +38,8 @@ import { useI18n } from 'vue-i18n'
 import {
   Message,
   Link as LinkIcon,
-  ChatDotRound
+  ChatDotRound,
+  Promotion
 } from '@element-plus/icons-vue'
 
 const { t } = useI18n()
@@ -50,75 +53,122 @@ const socialChannels = computed(() => [
   {
     type: 'GitHub',
     icon: LinkIcon,
-    url: 'https://github.com/yourusername'
+    url: 'https://github.com/tianciniu70-max'
   },
   {
     type: 'WeChat',
     icon: ChatDotRound,
     url: '#'
+  },
+  {
+    type: 'LinkedIn',
+    icon: Promotion,
+    url: 'https://linkedin.com/in/yourprofile'
   }
 ])
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/variables.scss';
+
 .app-footer {
   background: var(--color-black);
   color: var(--color-background-alt);
-  padding: var(--spacing-12) 0 var(--spacing-6);
+  padding: var(--spacing-16) 0 var(--spacing-8);
+  position: relative;
+  overflow: hidden;
+
+  // 装饰背景
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--color-primary) 50%,
+      transparent 100%
+    );
+    opacity: 0.3;
+  }
 }
 
 .footer-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-8);
-  padding-bottom: var(--spacing-8);
-  border-bottom: 1px solid var(--color-dark-gray);
+  margin-bottom: var(--spacing-10);
+  padding-bottom: var(--spacing-10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
   @media (max-width: $breakpoint-md) {
     flex-direction: column;
-    gap: var(--spacing-6);
+    gap: var(--spacing-8);
     text-align: center;
   }
 }
 
 .footer-brand {
-  .footer-title {
+  .footer-logo {
+    margin-bottom: var(--spacing-3);
+  }
+
+  .footer-logo-text {
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
-    margin-bottom: var(--spacing-2);
     background: linear-gradient(135deg, #fff 0%, var(--color-primary-light) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    letter-spacing: $letter-spacing-tight;
   }
 
   .footer-tagline {
     font-size: var(--font-size-sm);
-    color: var(--color-light-gray);
+    color: var(--color-gray);
+    max-width: 300px;
+    line-height: var(--line-height-relaxed);
+
+    @media (max-width: $breakpoint-md) {
+      max-width: 100%;
+    }
   }
 }
 
 .footer-social {
   display: flex;
-  gap: var(--spacing-4);
+  gap: var(--spacing-3);
+
+  @media (max-width: $breakpoint-md) {
+    gap: var(--spacing-4);
+  }
 }
 
 .social-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--color-dark-gray);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--border-radius-full);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--color-background-alt);
   transition: all var(--transition-base) var(--ease-out);
 
   &:hover {
     background: var(--color-primary);
+    border-color: var(--color-primary);
     color: var(--color-background);
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 113, 227, 0.3);
+  }
+
+  .el-icon {
+    font-size: 20px;
   }
 }
 
@@ -127,11 +177,20 @@ const socialChannels = computed(() => [
   justify-content: space-between;
   align-items: center;
   font-size: var(--font-size-sm);
-  color: var(--color-light-gray);
+  color: var(--color-gray);
 
   @media (max-width: $breakpoint-md) {
     flex-direction: column;
-    gap: var(--spacing-2);
+    gap: var(--spacing-3);
   }
+}
+
+.copyright {
+  font-weight: var(--font-weight-normal);
+}
+
+.made-with {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-light-gray);
 }
 </style>

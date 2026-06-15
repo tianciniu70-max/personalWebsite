@@ -1,9 +1,46 @@
 // ============================================
-// Global Styles
+// Global Styles - 极简日式风格
+// Minimalist Japanese Style
 // ============================================
 
 @import './variables.scss';
 @import './reset.scss';
+
+// ============================================
+// Base Styles
+// ============================================
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-charcoal);
+  background-color: var(--color-background);
+  overflow-x: hidden;
+
+  // 日语文本优化
+  &[lang="ja"], &[lang="ja-JP"] {
+    font-family: var(--font-family-base-ja);
+    line-height: 1.75;
+    letter-spacing: 0.02em;
+  }
+
+  // 中文文本优化
+  &[lang="zh"], &[lang="zh-CN"] {
+    letter-spacing: 0.01em;
+  }
+}
 
 // ============================================
 // Utility Classes
@@ -15,23 +52,37 @@
   margin: 0 auto;
   padding: 0 var(--spacing-4);
 
+  &--narrow {
+    max-width: var(--container-max-width-narrow);
+  }
+
   @media (min-width: $breakpoint-md) {
     padding: 0 var(--spacing-6);
+  }
+
+  @media (min-width: $breakpoint-xl) {
+    padding: 0 var(--spacing-8);
   }
 }
 
 .section {
-  padding: var(--spacing-12) 0;
-  min-height: 60vh;
+  padding: var(--spacing-20) 0;
+  position: relative;
+  overflow: hidden;
 
   &--hero {
-    min-height: 80vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
+    padding-top: var(--header-height);
   }
 
   &--alt {
     background-color: var(--color-background-alt);
+  }
+
+  &--compact {
+    padding: var(--spacing-16) 0;
   }
 }
 
@@ -40,7 +91,7 @@
 .text-right { text-align: right; }
 
 // ============================================
-// Animations
+// Animations - 精致的动效
 // ============================================
 
 @keyframes fadeIn {
@@ -54,10 +105,32 @@
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes slideInLeft {
   from {
     opacity: 0;
-    transform: translateX(-30px);
+    transform: translateX(-40px);
   }
   to {
     opacity: 1;
@@ -68,7 +141,7 @@
 @keyframes slideInRight {
   from {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(40px);
   }
   to {
     opacity: 1;
@@ -76,15 +149,66 @@
   }
 }
 
-.fade-in {
-  animation: fadeIn 0.6s var(--ease-out) forwards;
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+// 滚动触发动画类
+.fade-in {
+  animation: fadeIn 0.8s var(--ease-out) forwards;
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s var(--ease-out) forwards;
+}
+
+.fade-in-down {
+  opacity: 0;
+  animation: fadeInDown 0.8s var(--ease-out) forwards;
+}
+
+.slide-in-left {
+  opacity: 0;
+  animation: slideInLeft 0.8s var(--ease-out) forwards;
+}
+
+.slide-in-right {
+  opacity: 0;
+  animation: slideInRight 0.8s var(--ease-out) forwards;
+}
+
+.scale-in {
+  opacity: 0;
+  animation: scaleIn 0.6s var(--ease-out) forwards;
+}
+
+// 延迟类
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+
 // ============================================
-// Component Base Styles
+// Button Styles
 // ============================================
 
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -92,13 +216,32 @@
   padding: var(--spacing-3) var(--spacing-6);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-full);
   transition: all var(--transition-base) var(--ease-out);
   cursor: pointer;
+  border: none;
+  outline: none;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity var(--transition-base) var(--ease-out);
+  }
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+
+    &::before {
+      opacity: 0.1;
+    }
   }
 
   &:active {
@@ -106,22 +249,32 @@
   }
 
   &--primary {
-    background-color: var(--color-primary);
-    color: var(--color-background);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: white;
 
     &:hover {
-      background-color: var(--color-primary-dark);
+      box-shadow: 0 8px 20px rgba(0, 113, 227, 0.3);
     }
   }
 
   &--outline {
-    border: 2px solid var(--color-primary);
+    border: 1.5px solid var(--color-primary);
     color: var(--color-primary);
     background-color: transparent;
 
     &:hover {
       background-color: var(--color-primary);
-      color: var(--color-background);
+      color: white;
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: var(--color-gray);
+
+    &:hover {
+      background-color: var(--color-background-alt);
+      color: var(--color-charcoal);
     }
   }
 
@@ -129,18 +282,51 @@
     padding: var(--spacing-4) var(--spacing-8);
     font-size: var(--font-size-lg);
   }
+
+  &--small {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+  }
+
+  // 图标按钮
+  &--icon {
+    padding: var(--spacing-3);
+    aspect-ratio: 1;
+  }
 }
+
+// ============================================
+// Card Styles
+// ============================================
 
 .card {
   background: var(--color-background);
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-xl);
   padding: var(--spacing-6);
   box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
   transition: all var(--transition-base) var(--ease-out);
 
   &:hover {
     box-shadow: var(--shadow-lg);
     transform: translateY(-4px);
+  }
+
+  &--elevated {
+    box-shadow: var(--shadow-md);
+  }
+
+  &--flat {
+    box-shadow: none;
+    border: none;
+  }
+
+  &--interactive {
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--color-primary);
+    }
   }
 }
 
@@ -149,19 +335,33 @@
 // ============================================
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #00c6ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+
+  &--warm {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  &--cool {
+    background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+  }
 }
 
 .section-title {
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-5xl);
   font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
   margin-bottom: var(--spacing-4);
   text-align: center;
+  letter-spacing: $letter-spacing-tight;
 
   @media (max-width: $breakpoint-md) {
+    font-size: var(--font-size-3xl);
+  }
+
+  @media (max-width: $breakpoint-sm) {
     font-size: var(--font-size-2xl);
   }
 }
@@ -170,13 +370,66 @@
   font-size: var(--font-size-lg);
   color: var(--color-gray);
   text-align: center;
-  margin-bottom: var(--spacing-12);
+  margin-bottom: var(--spacing-16);
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  line-height: var(--line-height-relaxed);
 
   @media (max-width: $breakpoint-md) {
     font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-12);
+  }
+}
+
+// ============================================
+// Tag/Badge Styles
+// ============================================
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--border-radius-full);
+  background-color: var(--color-background-alt);
+  color: var(--color-gray);
+  transition: all var(--transition-base) var(--ease-out);
+
+  &:hover {
+    background-color: var(--color-light-gray);
+  }
+
+  &--primary {
+    background-color: rgba(0, 113, 227, 0.1);
+    color: var(--color-primary);
+  }
+
+  &--success {
+    background-color: rgba(52, 199, 89, 0.1);
+    color: var(--color-success);
+  }
+}
+
+// ============================================
+// Divider
+// ============================================
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--spacing-8) 0;
+
+  &--thick {
+    height: 2px;
+  }
+
+  &--vertical {
+    width: 1px;
+    height: 100%;
+    margin: 0 var(--spacing-4);
   }
 }
 
@@ -186,12 +439,63 @@
 
 .hide-mobile {
   @media (max-width: $breakpoint-md) {
-    display: none;
+    display: none !important;
+  }
+}
+
+.hide-tablet {
+  @media (min-width: $breakpoint-md) and (max-width: $breakpoint-lg) {
+    display: none !important;
   }
 }
 
 .hide-desktop {
-  @media (min-width: $breakpoint-md) {
-    display: none;
+  @media (min-width: $breakpoint-lg) {
+    display: none !important;
   }
+}
+
+// ============================================
+// Scrollbar Styling
+// ============================================
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-medium-gray);
+  border-radius: var(--border-radius-full);
+
+  &:hover {
+    background: var(--color-gray);
+  }
+}
+
+// ============================================
+// Selection Styling
+// ============================================
+
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+::-moz-selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+// ============================================
+// Focus States
+// ============================================
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }

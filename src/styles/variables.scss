@@ -1,81 +1,110 @@
 // ============================================
-// Color Palette
+// 极简日式风格设计系统
+// Minimalist Japanese Style Design System
 // ============================================
-$color-black: #1a1a1a;
-$color-dark-gray: #333333;
-$color-gray: #666666;
-$color-light-gray: #999999;
-$color-border: #e5e5e5;
+
+// ============================================
+// Color Palette - 色彩系统
+// ============================================
+// 中性色 - 更柔和的灰色系统
+$color-black: #0a0a0a;
+$color-charcoal: #1c1c1e;
+$color-dark-gray: #2c2c2e;
+$color-gray: #8e8e93;
+$color-medium-gray: #c7c7cc;
+$color-light-gray: #e5e5ea;
 $color-background: #ffffff;
-$color-background-alt: #f5f5f5;
+$color-background-alt: #f5f5f7;
+$color-border: rgba(0, 0, 0, 0.08);
 
-// Primary Colors
-$color-primary: #2563eb;
-$color-primary-light: #3b82f6;
-$color-primary-dark: #1d4ed8;
+// 主色调 - 更高级的蓝色
+$color-primary: #0071e3;
+$color-primary-light: #0077ed;
+$color-primary-dark: #005bb5;
 
-// Semantic Colors
-$color-success: #10b981;
-$color-warning: #f59e0b;
-$color-error: #ef4444;
+// 语义色
+$color-success: #34c759;
+$color-warning: #ff9500;
+$color-error: #ff3b30;
 
 // ============================================
-// Typography
+// Typography - 字体系统
 // ============================================
-$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans',
-  'Noto Sans JP', sans-serif;
-$font-family-code: 'SF Mono', 'Monaco', 'Courier New', monospace;
+// 支持中日英字体
+$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans',
+  'Noto Sans JP', 'Noto Sans SC', sans-serif;
+$font-family-base-ja: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+$font-family-code: 'SF Mono', 'Monaco', 'Courier New', 'Fira Code', monospace;
 
-// Font Sizes
-$font-size-xs: 0.75rem; // 12px
-$font-size-sm: 0.875rem; // 14px
-$font-size-base: 1rem; // 16px
-$font-size-lg: 1.125rem; // 18px
-$font-size-xl: 1.5rem; // 24px
-$font-size-2xl: 2rem; // 32px
-$font-size-3xl: 2.5rem; // 40px
-$font-size-4xl: 3.5rem; // 56px
+// Font Sizes - 更精确的排版比例
+$font-size-xs: 0.75rem;    // 12px
+$font-size-sm: 0.875rem;   // 14px
+$font-size-base: 1rem;     // 16px
+$font-size-lg: 1.125rem;   // 18px
+$font-size-xl: 1.25rem;    // 20px
+$font-size-2xl: 1.5rem;    // 24px
+$font-size-3xl: 2rem;      // 32px
+$font-size-4xl: 2.5rem;    // 40px
+$font-size-5xl: 3rem;      // 48px
+$font-size-6xl: 3.75rem;   // 60px
+$font-size-7xl: 4.5rem;    // 72px
 
-// Line Heights
-$line-height-tight: 1.25;
+// Line Heights - 更舒适的行高
+$line-height-tight: 1.2;
+$line-height-snug: 1.35;
 $line-height-normal: 1.5;
 $line-height-relaxed: 1.75;
+$line-height-loose: 2;
 
 // Font Weights
+$font-weight-light: 300;
 $font-weight-normal: 400;
 $font-weight-medium: 500;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
+// Letter Spacing - 日式风格常用微调
+$letter-spacing-tight: -0.02em;
+$letter-spacing-normal: 0;
+$letter-spacing-wide: 0.02em;
+$letter-spacing-wider: 0.05em;
+
 // ============================================
-// Spacing
+// Spacing - 间距系统 (8px base)
 // ============================================
 $spacing-0: 0;
-$spacing-1: 0.25rem; // 4px
-$spacing-2: 0.5rem; // 8px
-$spacing-3: 0.75rem; // 12px
-$spacing-4: 1rem; // 16px
-$spacing-5: 1.5rem; // 24px
-$spacing-6: 2rem; // 32px
-$spacing-8: 3rem; // 48px
-$spacing-10: 4rem; // 64px
-$spacing-12: 6rem; // 96px
+$spacing-1: 0.25rem;  // 4px
+$spacing-2: 0.5rem;   // 8px
+$spacing-3: 0.75rem;  // 12px
+$spacing-4: 1rem;     // 16px
+$spacing-5: 1.25rem;  // 20px
+$spacing-6: 1.5rem;   // 24px
+$spacing-8: 2rem;     // 32px
+$spacing-10: 2.5rem;   // 40px
+$spacing-12: 3rem;    // 48px
+$spacing-16: 4rem;    // 64px
+$spacing-20: 5rem;    // 80px
+$spacing-24: 6rem;    // 96px
+$spacing-32: 8rem;    // 128px
 
 // ============================================
-// Transitions
+// Transitions - 过渡效果
 // ============================================
+$transition-instant: 100ms;
 $transition-fast: 150ms;
-$transition-base: 200ms;
-$transition-slow: 300ms;
+$transition-base: 250ms;
+$transition-slow: 350ms;
+$transition-slower: 500ms;
 
-// Easing Functions
-$ease-in: cubic-bezier(0.4, 0, 1, 1);
-$ease-out: cubic-bezier(0, 0, 0.2, 1);
-$ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+// Easing Functions - 更自然的缓动
+$ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+$ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 // ============================================
-// Breakpoints
+// Breakpoints - 响应式断点
 // ============================================
+$breakpoint-xs: 375px;
 $breakpoint-sm: 640px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 1024px;
@@ -83,17 +112,26 @@ $breakpoint-xl: 1280px;
 $breakpoint-2xl: 1536px;
 
 // ============================================
-// Layout
+// Layout - 布局
 // ============================================
 $container-max-width: 1200px;
+$container-max-width-narrow: 900px;
 $header-height: 64px;
+$header-height-expanded: 80px;
+
+// Border Radius - 更精致的圆角
+$border-radius-xs: 2px;
 $border-radius-sm: 4px;
 $border-radius-md: 8px;
 $border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-2xl: 24px;
+$border-radius-full: 9999px;
 
 // ============================================
-// Z-index
+// Z-index - 层级系统
 // ============================================
+$z-index-base: 1;
 $z-index-dropdown: 1000;
 $z-index-sticky: 1020;
 $z-index-fixed: 1030;
@@ -103,18 +141,28 @@ $z-index-popover: 1060;
 $z-index-tooltip: 1070;
 
 // ============================================
-// Shadows
+// Shadows - 更细腻的阴影系统
 // ============================================
-$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.06);
+$shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
 
+// 内阴影
+$shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+
+// ============================================
 // CSS Variables for JavaScript access
+// ============================================
 :root {
+  // Colors
   --color-black: #{$color-black};
+  --color-charcoal: #{$color-charcoal};
   --color-dark-gray: #{$color-dark-gray};
   --color-gray: #{$color-gray};
+  --color-medium-gray: #{$color-medium-gray};
   --color-light-gray: #{$color-light-gray};
   --color-border: #{$color-border};
   --color-background: #{$color-background};
@@ -123,10 +171,35 @@ $shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 
   --color-primary-light: #{$color-primary-light};
   --color-primary-dark: #{$color-primary-dark};
 
+  // Typography
   --font-family-base: #{$font-family-base};
+  --font-family-base-ja: #{$font-family-base-ja};
+  --font-family-code: #{$font-family-code};
   --font-size-base: #{$font-size-base};
   --line-height-normal: #{$line-height-normal};
 
+  // Layout
   --header-height: #{$header-height};
   --container-max-width: #{$container-max-width};
+
+  // Transitions
+  --transition-base: #{$transition-base};
+  --ease-in-out: #{$ease-in-out};
+}
+
+// ============================================
+// 暗色模式支持
+// ============================================
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-black: #fafafa;
+    --color-charcoal: #f5f5f7;
+    --color-dark-gray: #a1a1a6;
+    --color-gray: #636366;
+    --color-medium-gray: #48484a;
+    --color-light-gray: #2c2c2e;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-background: #000000;
+    --color-background-alt: #1c1c1e;
+  }
 }
