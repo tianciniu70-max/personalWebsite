@@ -25,23 +25,29 @@ export function useScrollAnimation() {
           const target = entry.target as HTMLElement
           target.classList.add('visible')
           visibleElements.value.add(target)
-          // 可选：观察一次后停止观察
-          // observer?.unobserve(target)
-        } else {
-          // 如果希望元素可以重复触发动画，取消下面的注释
-          // const target = entry.target as HTMLElement
-          // target.classList.remove('visible')
-          // visibleElements.value.delete(target)
         }
       })
     }, defaultOptions)
 
-    // 延迟一点，确保 DOM 已渲染
-    setTimeout(() => {
-      document.querySelectorAll(selector).forEach(el => {
+    // 立即检查元素是否已经在视口中
+    const checkImmediateVisibility = () => {
+      const elements = document.querySelectorAll(selector)
+      elements.forEach(el => {
+        const rect = (el as HTMLElement).getBoundingClientRect()
+        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0
+
+        if (isInViewport) {
+          ;(el as HTMLElement).classList.add('visible')
+          visibleElements.value.add(el as HTMLElement)
+        }
+
+        // 同时开始观察，用于后续滚动
         observer?.observe(el)
       })
-    }, 100)
+    }
+
+    // 立即执行一次
+    checkImmediateVisibility()
 
     return observer
   }

@@ -2,7 +2,7 @@
   <nav class="sidebar-nav" :class="{ 'sidebar-nav--compact': isCompact }">
     <!-- Logo -->
     <div class="nav-logo">
-      <a href="#hero" class="logo-link">
+      <a href="#/" class="logo-link">
         <span class="logo-initials">TC</span>
       </a>
     </div>
@@ -12,7 +12,7 @@
       <a
         v-for="item in navItems"
         :key="item.key"
-        :href="`#${item.key}`"
+        :href="`#/#${item.key}`"
         class="nav-link"
         :class="{ 'nav-link--active': activeSection === item.key }"
         :title="item.label"

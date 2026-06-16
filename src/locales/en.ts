@@ -14,38 +14,35 @@ export default {
     status: 'Open to Work',
     statusIcon: '🔥',
     tagline: 'Frontend Developer',
-    greeting: 'Hello, I\'m a',
-    name: 'Frontend Developer',
-    experience: '5 Years of Enterprise Development',
-    specialization: 'Vue3 Ecosystem / Data Visualization / Component Architecture',
+    greeting: 'Hello, I\'m',
+    name: 'Niu Tianci',
+    experience: '27 years old · 5 Years of Enterprise Development',
+    specialization: 'Vue3 Ecosystem / Industrial MES Systems / Data Visualization',
     availability: 'Available for opportunities',
+    location: '📍 Xuzhou, Jiangsu',
     cta: {
       primary: 'View Projects',
-      secondary: 'Download Resume',
-      contact: 'Contact Me'
+      secondary: 'Contact Me'
     }
   },
 
   // About Section
   about: {
     title: 'About Me',
-    subtitle: 'Design × Engineering',
-    story: `I am a frontend engineer with 5 years of experience, and a career changer with a unique background.
-    I graduated with a degree in Fashion Design, which gave me a keen eye for visual aesthetics and user experience.
-
-    Since transitioning to frontend development, I've integrated design thinking into code implementation:
-    Approaching interaction logic from a UX perspective, optimizing information architecture with visual hierarchy skills,
-    and building maintainable component systems with design standards in mind.`,
+    subtitle: 'Frontend Engineer · Xuzhou, Jiangsu',
+    story: `I am a frontend engineer with 5 years of experience, graduated from Suzhou Institute of Technology.
+    Specialized in frontend development for industrial manufacturing, deeply engaged in equipment full connection and special process business directions.
+    Led development and delivery of multiple large-scale enterprise projects.`,
     highlights: [
-      { label: 'Cross-Disciplinary', desc: 'Design background × Engineering mindset' },
-      { label: '5 Years Exp', desc: 'End-to-end development of large-scale projects' },
-      { label: 'Technical Depth', desc: 'Vue3 / Component Architecture / Engineering' },
-      { label: 'Detail Oriented', desc: 'Pixel-perfect implementation with design awareness' }
+      { label: 'Industrial Expertise', desc: 'Deep experience in MES/equipment management systems' },
+      { label: 'Full-Stack Thinking', desc: 'Frontend development + component library architecture' },
+      { label: 'Project Delivery', desc: 'Led multiple projects from 0 to 1' },
+      { label: 'Continuous Optimization', desc: 'Performance optimization and code quality focus' }
     ],
     stats: [
       { number: '5+', label: 'Years Experience' },
-      { number: '13+', label: 'Projects Delivered' },
-      { number: '100%', label: 'Client Satisfaction' }
+      { number: '4+', label: 'Large Projects' },
+      { number: '100%', label: 'Project Delivery' }
     ]
   },
 
@@ -60,19 +57,29 @@ export default {
         items: ['Vue3 / Composition API', 'TypeScript / JavaScript ES6+', 'HTML5 / CSS3 / SCSS', 'Vite / Webpack']
       },
       {
-        name: 'Frameworks & Tools',
+        name: 'Enterprise UI',
         icon: 'tool',
-        items: ['Element Plus / Ant Design', 'Pinia / Vuex', 'Vue Router', 'Axios / RESTful API']
+        items: ['Element Plus', 'Ant Design Vue', 'Custom Component Library']
       },
       {
         name: 'Data Visualization',
         icon: 'chart',
-        items: ['ECharts / D3.js', 'Dashboard Development', 'BI Visualization Platforms', 'Large Screen Solutions']
+        items: ['ECharts', 'DataV', 'Industrial Dashboards', 'Real-time Monitoring']
+      },
+      {
+        name: 'Industrial Domain',
+        icon: 'factory',
+        items: ['MES Systems', 'Equipment Management', 'OEE Analysis', 'Alarm Centers']
       },
       {
         name: 'Engineering',
         icon: 'git',
-        items: ['Git Workflow', 'Component Architecture', 'Performance Optimization', 'Team Collaboration']
+        items: ['ESLint / Prettier', 'Git Workflow', 'Performance Optimization', 'Team Collaboration']
+      },
+      {
+        name: 'Development Tools',
+        icon: 'settings',
+        items: ['VS Code', 'Chrome DevTools', 'Postman', 'Git']
       }
     ]
   },
@@ -80,63 +87,86 @@ export default {
   // Projects Section
   projects: {
     title: 'Projects',
-    subtitle: 'Enterprise-Level Project Experience',
+    subtitle: '2025 Selected Projects',
     items: [
       {
-        id: 'mes',
-        name: 'Smart Factory MES System',
+        id: 'hua-rui',
+        name: 'Huarui — Equipment Full Connection',
         role: 'Lead Frontend Developer',
-        duration: '2021 - 2022',
-        description: 'Manufacturing Execution System for production planning, work order management, quality traceability, and equipment monitoring. Deployed across multiple manufacturing companies, improving production efficiency by approximately 30%.',
-        tech_stack: ['Vue3 + TypeScript', 'Element Plus', 'ECharts Visualization', 'WebSocket Real-time Communication'],
+        duration: '2025',
+        description: 'Equipment full connection management platform for manufacturing. Developed core modules including equipment monitoring, OEE analysis, alarm center, and configuration management.',
+        tech_stack: ['Vue3', 'TypeScript', 'ECharts', 'Element Plus'],
         responsibilities: [
           'Led frontend architecture and technology decisions',
-          'Built core component library, improving development efficiency by 40%',
-          'Developed complex forms and data visualization modules',
-          'Optimized initial load performance, reducing load time by 50%'
+          'Developed equipment monitoring and OEE analysis modules',
+          'Built alarm center and parameter configuration system',
+          'Conducted performance optimization and bug fixes'
         ],
         achievements: [
-          'Successfully deployed and stable for 2 years',
-          'Supports daily operations for 3+ manufacturing companies',
-          'Component library reused across other company projects'
+          'Real-time equipment monitoring',
+          'OEE efficiency analysis',
+          'Comprehensive alarm management',
+          'System stability and continuous iteration'
         ]
       },
       {
-        id: 'oee',
-        name: 'OEE Equipment Management System',
+        id: 'tian-suo',
+        name: 'Tiansuo — Special Process',
+        role: 'Core Developer',
+        duration: '2025',
+        description: 'Special process management platform. Developed core modules including analysis master template, analysis entry, document template management, tool management, and App management.',
+        tech_stack: ['Vue3', 'Composition API', 'TypeScript', 'Element Plus'],
+        responsibilities: [
+          'Developed analysis master template and entry modules',
+          'Built document template management system',
+          'Implemented tool lifecycle management',
+          'Continuous feature optimization and code refactoring'
+        ],
+        achievements: [
+          'Digital process workflow',
+          'Tool lifecycle management',
+          'Document template reuse',
+          'Continuous functional optimization'
+        ]
+      },
+      {
+        id: 'shang-fei',
+        name: 'Shangfeiyuan — Equipment Full Connection',
+        role: 'Independent Developer',
+        duration: '2025',
+        description: 'Customized migration based on Huarui project. Completed menu route restructuring and independently developed equipment overview, operation & maintenance, process center, data statistics, and comprehensive alarm management system.',
+        tech_stack: ['Vue3', 'Vue Router', 'TypeScript', 'ECharts', 'Element Plus'],
+        responsibilities: [
+          'Menu route architecture redesign',
+          'Independently developed equipment overview module',
+          'Built operation & maintenance system',
+          'Developed process center and data statistics',
+          'Comprehensive alarm management system'
+        ],
+        achievements: [
+          'Menu architecture restructuring',
+          'Equipment operation & maintenance system',
+          'Alarm dashboard and rule engine',
+          'Project successfully delivered'
+        ]
+      },
+      {
+        id: 'dong-qing',
+        name: 'Dongqing — Special Process',
         role: 'Frontend Developer',
-        duration: '2022 - 2023',
-        description: 'A system focused on Overall Equipment Effectiveness (OEE) monitoring and analysis. Through real-time data collection and visualization, it helps factories improve equipment utilization and reduce downtime.',
-        tech_stack: ['Vue3 + Composition API', 'TypeScript', 'ECharts', 'Pinia State Management'],
+        duration: '2025',
+        description: 'Special process monitoring platform. Developed product axis and alarm center modules with continuous optimization and version updates.',
+        tech_stack: ['Vue3', 'TypeScript', 'ECharts', 'WebSocket'],
         responsibilities: [
-          'Developed real-time equipment monitoring dashboard',
-          'Implemented OEE metric calculation and visualization',
-          'Optimized rendering performance for large datasets',
-          'Built reusable chart components'
+          'Developed process monitoring modules',
+          'Built product axis and alarm center',
+          'Bug fixes and performance optimization',
+          'Code maintenance and version updates'
         ],
         achievements: [
-          'Helped clients improve equipment utilization by 15%',
-          'Supports simultaneous monitoring of 100+ devices',
-          'Chart components integrated into company component library'
-        ]
-      },
-      {
-        id: 'dashboard',
-        name: 'Data Dashboard & BI Visualization Platform',
-        role: 'Core Frontend Developer',
-        duration: '2023 - Present',
-        description: 'Enterprise-grade data visualization solution including large-screen displays and self-service analytics platform. Supports drag-and-drop report generation, multi-dimensional data analysis, and real-time data refresh.',
-        tech_stack: ['Vue3 + TypeScript', 'ECharts / D3.js', 'Vite Build Optimization', 'Responsive Design'],
-        responsibilities: [
-          'Led data visualization module development',
-          'Designed configurable chart component system',
-          'Implemented adaptive layout for large screens',
-          'Optimized rendering performance for complex scenarios'
-        ],
-        achievements: [
-          'Supports core business data visualization',
-          '1000+ daily active users',
-          'Large-screen solution deployed at multiple client sites'
+          'Process visualization monitoring',
+          'Alarm center construction',
+          'Version iteration optimization'
         ]
       }
     ]
@@ -149,24 +179,24 @@ export default {
     intro: 'If you\'re interested in my background or have any opportunities, please feel free to reach out',
     channels: [
       {
-        type: 'GitHub',
-        value: 'github.com/yourusername',
-        icon: 'github',
-        description: 'Check out my code',
-        url: 'https://github.com/yourusername'
+        type: 'Phone',
+        value: '18811965574',
+        icon: 'phone',
+        description: 'Mon-Fri 9:00-18:00',
+        url: 'tel:18811965574'
       },
       {
         type: 'Email',
-        value: 'your.email@example.com',
+        value: 'xnfly778@163.com',
         icon: 'email',
         description: 'Send me an email',
-        url: 'mailto:your.email@example.com'
+        url: 'mailto:xnfly778@163.com'
       },
       {
-        type: 'WeChat',
-        value: 'your_wechat_id',
-        icon: 'wechat',
-        description: 'Connect on WeChat',
+        type: 'Location',
+        value: 'Xuzhou, Jiangsu',
+        icon: 'location',
+        description: 'Remote/On-site available',
         url: ''
       }
     ],
@@ -176,7 +206,7 @@ export default {
 
   // Footer
   footer: {
-    copyright: '© 2024 Frontend Engineer Portfolio. All rights reserved.',
-    madeWith: 'Made with Vue3 + TypeScript'
+    copyright: '© 2025 Niu Tianci · Frontend Developer',
+    madeWith: 'Built with Vue3 + TypeScript'
   }
 }

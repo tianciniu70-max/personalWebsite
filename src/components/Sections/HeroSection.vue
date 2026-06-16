@@ -24,10 +24,10 @@
 
       <!-- CTA 按钮 -->
       <div class="hero-actions animate-on-enter">
-        <a href="#projects" class="btn btn-primary">
+        <a href="#/#projects" class="btn btn-primary">
           {{ t('hero.cta.primary') }}
         </a>
-        <a href="#contact" class="btn btn-outline">
+        <a href="#/#contact" class="btn btn-outline">
           {{ t('hero.cta.secondary') }}
         </a>
       </div>

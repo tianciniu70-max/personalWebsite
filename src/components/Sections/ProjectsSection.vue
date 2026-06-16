@@ -36,8 +36,13 @@
             </span>
           </div>
 
+          <!-- 职责 -->
+          <ul v-if="project.responsibilities" class="card-list">
+            <li v-for="item in project.responsibilities" :key="item">{{ item }}</li>
+          </ul>
+
           <!-- 成果 -->
-          <ul v-if="project.achievements" class="card-achievements">
+          <ul v-if="project.achievements" class="card-list card-list--achievements">
             <li v-for="item in project.achievements" :key="item">{{ item }}</li>
           </ul>
         </div>
@@ -200,7 +205,7 @@ const projects = computed(() => tm('projects.items') as any[])
   background: var(--color-muted);
 }
 
-.card-achievements {
+.card-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -223,6 +228,14 @@ const projects = computed(() => tm('projects.items') as any[])
 
     + li {
       margin-top: $spacing-1;
+    }
+  }
+
+  &--achievements {
+    margin-top: $spacing-4;
+
+    li::before {
+      color: var(--color-primary);
     }
   }
 }

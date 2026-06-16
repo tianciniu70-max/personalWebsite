@@ -26,7 +26,7 @@
     <!-- CTA -->
     <div class="contact-cta animate-on-enter">
       <p class="cta-text">{{ t('contact.cta') }}</p>
-      <a href="mailto:your.email@example.com" class="cta-button">
+      <a href="mailto:xnfly778@163.com" class="cta-button">
         {{ t('contact.emailCta') }}
         <span class="cta-arrow">→</span>
       </a>
@@ -44,9 +44,11 @@ const channels = computed(() => tm('contact.channels') as any[])
 
 const getContactIcon = (iconName: string) => {
   const icons: Record<string, string> = {
+    phone: '📞',
+    email: '✉',
+    location: '📍',
     wechat: '💬',
-    github: '⌘',
-    email: '✉'
+    github: '⌘'
   }
   return icons[iconName] || '●'
 }
