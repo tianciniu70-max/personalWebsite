@@ -387,9 +387,9 @@ onUnmounted(() => {
 	backdrop-filter: blur(8px);
 
 	@media (max-width: $breakpoint-md) {
-		opacity: 1;
 		width: 40px;
 		height: 40px;
+		opacity: 0;
 	}
 
 	&:hover {
